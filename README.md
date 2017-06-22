@@ -21,6 +21,10 @@ The visualization of this project was made with the Simulator which can be downl
 
 ## Basic Build Instructions
 
+I used xcode as main IDE. You can execute project with ide_profiles/xcode/ExtendedKF.xcodeproj file. 
+
+Also you can execute project with following steps.
+0. Install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems and [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) for windows.
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make` 
@@ -34,12 +38,24 @@ The visualization of this project was made with the Simulator which can be downl
 
 |    |Fused sensor | only laser | only radar |
 |:--:|:----------:|:----------:|:----------:|
-| px |   0.0954   |   0.1473   |   0.2302   |
-| py |   0.0853   |   0.1153   |   0.3464   |
-| vx |   0.3861   |   0.6383   |   0.5835   |
-| vy |   0.4036   |   0.5346   |   0.8040   |
+| px |   0.0973   |   0.1473   |   0.2302   |
+| py |   0.0855   |   0.1153   |   0.3464   |
+| vx |   0.4513   |   0.6383   |   0.5835   |
+| vy |   0.4399   |   0.5346   |   0.8040   |
 
 * Here are the visualization of result in the simulator.
 
 #### Dataset1 result in the simulator.
-![alt text][image1]
+[![alt text][image1]](https://youtu.be/nN3dMHDyro8)
+
+
+#### Dataset2 result in the simulator.
+[![alt text][image2]](https://youtu.be/NDZiqUevtEI)
+
+---
+## Discussion  
+#### Here are the crucial tuning point that was important to improve the reduce RMSE of estimations.
+* In the measurement update step we calculate the difference between our measurement and returned value of measurement function with  predicted state value(expressed as 'y')  we should avoid the case where phi of y exeed the [-pi,pi] range. 
+* We should handle the case where px and py is near 0 which lead to Nan value in Matrix variable during the calculation.
+
+
