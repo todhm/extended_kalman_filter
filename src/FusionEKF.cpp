@@ -124,11 +124,22 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   ekf_.Predict();
 
-
+    
   /*****************************************************************************
    *  Update
+   
    ****************************************************************************/
+    // avoid case where px * px + py * py close to zero
+    float px = ekf_.x_(0);
+    float py = ekf_.x_(1);
+    
+    if ( px * px + py * py < 0.0001){
+        return ;
+        
+    }
+ 
   // Radar update
+   
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       
         Hj_ = tools.CalculateJacobian(ekf_.x_);
